@@ -77,10 +77,10 @@ export default function SinglePointAnalysis({
 
   const profileRequestHasChanged = useSelector(selectProfileRequestHasChanged)
   const profileRequestLonLat = useSelector(selectProfileRequestLonLat)
-  const scenarioErrors = useSelector((s) =>
+  const scenarioErrors: string[] | undefined = useSelector((s) =>
     get(s, 'analysis.scenarioApplicationErrors')
   )
-  const scenarioWarnings = useSelector((s) =>
+  const scenarioWarnings: string[] | undefined = useSelector((s) =>
     get(s, 'analysis.scenarioApplicationWarnings')
   )
   const analysisBounds = useSelector(selectAnalysisBounds)
@@ -150,7 +150,7 @@ export default function SinglePointAnalysis({
 
       <AnalysisTitle />
 
-      {scenarioErrors != null && scenarioErrors.length > 0 && (
+      {(scenarioErrors ?? []).length > 0 && (
         <Alert
           alignItems='flex-start'
           flexDirection='column'

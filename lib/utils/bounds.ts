@@ -1,3 +1,4 @@
+import toLeaflet from '@conveyal/lonlat'
 import lonlat from '@conveyal/lonlat'
 
 import L from 'lib/leaflet'
@@ -50,12 +51,21 @@ export function fromLatLngBounds(bounds: L.LatLngBounds): ExtendedBounds {
   }
 }
 
+interface LonLat {
+  lat: number
+  lon: number
+}
+
+function convertToLatLng(lonlat: LonLat): L.LatLngLiteral {
+  return {lat: lonlat.lat, lng: lonlat.lon}
+}
+
 /**
  * Reproject bounds to the grid size that we use.
  */
 export function reprojectBounds(bounds: L.LatLngBounds): L.LatLngBounds {
   return new L.LatLngBounds(
-    lonlat.toLeaflet(reprojectCoordinates(bounds.getSouthWest())),
-    lonlat.toLeaflet(reprojectCoordinates(bounds.getNorthEast()))
+    convertToLatLng(toLeaflet(reprojectCoordinates(bounds.getSouthWest()))),
+    convertToLatLng(toLeaflet(reprojectCoordinates(bounds.getNorthEast())))
   )
 }

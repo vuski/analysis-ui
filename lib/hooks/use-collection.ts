@@ -140,7 +140,7 @@ export default function useCollection<T extends CL.IModel>(
 export function createUseCollection<T extends CL.IModel>(
   collectionName: string
 ) {
-  return function useCollectionType(params?: UseCollection<T>) {
+  return function (params?: UseCollection<T>) {
     return useCollection<T>(collectionName, params)
   }
 }

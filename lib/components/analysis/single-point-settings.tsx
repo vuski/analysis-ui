@@ -101,7 +101,7 @@ export default function Settings({
   const currentProject = useSelector(selectCurrentProject)
   const profileRequestLonLat = useSelector(selectProfileRequestLonLat)
   const variantIndex = useSelector((s) =>
-    parseInt(get(s, 'analysis.requestsSettings[0].variantIndex', -1))
+    parseInt(get(s, 'analysis.requestsSettings[0].variantIndex', '-1'))
   )
   const primaryBorder = useColorModeValue('blue.50', 'blue.900')
   const comparisonBorderColor = useColorModeValue('red.100', 'red.900')
@@ -115,7 +115,7 @@ export default function Settings({
 
   const regionBounds = useSelector(selectRegionBounds)
   const requestsSettings = useSelector((s) =>
-    get(s, 'analysis.requestsSettings')
+    get(s, 'analysis.requestsSettings', [])
   )
   const copyRequestSettings = useSelector((s) =>
     get(s, 'analysis.copyRequestSettings')
@@ -125,7 +125,7 @@ export default function Settings({
     get(s, 'analysis.requestsSettings[1].projectId')
   )
   const comparisonVariant = useSelector((s) =>
-    parseInt(get(s, 'analysis.requestsSettings[1].variantIndex', -1))
+    parseInt(get(s, 'analysis.requestsSettings[1].variantIndex', '-1'))
   )
   const comparisonProject = projects.find((p) => p._id === comparisonProjectId)
   const comparisonBundle = bundles.find(
@@ -163,6 +163,7 @@ export default function Settings({
     },
     [dispatch]
   )
+
   const replaceSettings = useCallback(
     (index, newSettings) => {
       dispatch(

@@ -1,7 +1,8 @@
 import {memo} from 'react'
+import {MAX_CUTOFF_MINUTES, CUTOFF_TICKS} from 'lib/constants'
 
 // The x axis labels for the plot
-const TIME_LABELS = [0, 15, 30, 45, 60, 75, 90, 105, 120]
+const TIME_LABELS = CUTOFF_TICKS
 
 interface MinuteTicksProps {
   minutes?: number[]

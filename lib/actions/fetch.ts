@@ -115,10 +115,12 @@ export const fetchIsActive = (sig: FetchSig) => {
 }
 
 // Simple action creator
-const createAction = (type: string) => (payload: any): Action => ({
-  type,
-  payload
-})
+const createAction =
+  (type: string) =>
+  (payload: any): Action => ({
+    type,
+    payload
+  })
 
 // Internally dispatched actions
 const abortedFetch = createAction(ABORTED_FETCH)
@@ -266,6 +268,7 @@ function runFetchAction(
       if (fetchIsActive(signature)) {
         dispatch(decrementFetches(signature))
         if (next) dispatch(wrapNext(next)(response))
+        //console.log('response', response)
         return response.value || response
       }
     })

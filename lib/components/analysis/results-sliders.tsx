@@ -24,9 +24,11 @@ import getNearestPercentileIndex from 'lib/selectors/nearest-percentile-index'
 import selectTravelTimePercentile from 'lib/selectors/travel-time-percentile'
 
 import {TRAVEL_TIME_PERCENTILES} from 'lib/constants'
+import {MAX_CUTOFF_MINUTES, CUTOFF_TICKS} from 'lib/constants'
 
+const MAX_CUTOFF = MAX_CUTOFF_MINUTES
 const parseCutoff = (v: string) => parseInt(v, 10)
-const cutoffIsValid = (v: number) => v != null && v >= 0 && v <= 120
+const cutoffIsValid = (v: number) => v != null && v >= 0 && v <= MAX_CUTOFF
 
 export default function ResultSliders({
   defaultCutoff,
@@ -37,7 +39,7 @@ export default function ResultSliders({
   const dispatch = useDispatch()
   const onChangeCutoff = useCallback(
     (cutoff: number) => {
-      if (cutoff >= 0 && cutoff <= 120) {
+      if (cutoff >= 0 && cutoff <= MAX_CUTOFF) {
         dispatch(setMaxTripDurationMinutes(cutoff))
       }
     },
@@ -94,7 +96,7 @@ const CutoffSlider = memo<CutoffSliderProps>(
         focusThumbOnChange={false}
         isDisabled={isDisabled}
         min={0}
-        max={120}
+        max={MAX_CUTOFF}
         onChange={onChange}
         value={cutoff}
       >

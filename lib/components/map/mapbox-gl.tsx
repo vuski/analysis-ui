@@ -4,7 +4,7 @@ import {MapLayer, MapLayerProps, withLeaflet} from 'react-leaflet'
 import 'mapbox-gl-leaflet'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
-import {MB_TOKEN} from 'lib/constants'
+import {MB_TOKEN, MB_STYLE} from 'lib/constants'
 
 interface MapboxGLLayerProps extends MapLayerProps {
   style: string
@@ -31,7 +31,9 @@ class MapBoxGLLayer extends MapLayer<MapboxGLLayerProps, MapboxGLEl> {
     if (L.mapboxGL == null) return null
     return L.mapboxGL({
       accessToken: MB_TOKEN,
-      style: props.style
+      style: MB_STYLE,
+      // @ts-ignore
+      language: 'ko'
     }) as MapboxGLEl
   }
 }

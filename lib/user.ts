@@ -40,8 +40,9 @@ export function userFromSession(req: IncomingMessage, session: Session): IUser {
   }
 
   if (user.accessGroup === process.env.NEXT_PUBLIC_ADMIN_ACCESS_GROUP) {
-    const adminTempAccessGroup = parse(req.headers.cookie || '')
-      .adminTempAccessGroup
+    const adminTempAccessGroup = parse(
+      req.headers.cookie || ''
+    ).adminTempAccessGroup
     if (adminTempAccessGroup) user.adminTempAccessGroup = adminTempAccessGroup
   }
 
@@ -52,12 +53,12 @@ export function userFromSession(req: IncomingMessage, session: Session): IUser {
 // Store on `window` so that each new tab/window needs to check the session
 export function getUser(serverSideUser?: IUser): undefined | IUser {
   if (AUTH_DISABLED) return localUser
-  if (!process.browser) return serverSideUser
-  return window.__user || serverSideUser
+  if (typeof window === 'undefined') return serverSideUser // 서버 사이드인 경우
+  return window.__user || serverSideUser // 클라이언트 사이드인 경우
 }
 
 export function storeUser(user: IUser): void {
-  if (!process.browser || AUTH_DISABLED) return
+  if (typeof window === 'undefined' || AUTH_DISABLED) return
 
   // Store the user on window, requiring a new session on each tab/page
   window.__user = user

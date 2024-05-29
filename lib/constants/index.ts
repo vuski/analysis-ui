@@ -4,6 +4,7 @@ export const ENV = process.env.NODE_ENV
 export const MB_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 export const isServer = typeof window === 'undefined'
 export const AUTH_DISABLED = process.env.NEXT_PUBLIC_AUTH_DISABLED === 'true'
+export const MB_STYLE = 'mapbox://styles/sbkim427/cl6ool43r003o14kwmd8ogdwc'
 
 /**
  * Logo
@@ -229,3 +230,8 @@ export const FONT_URL =
   process.env.NODE_ENV === 'production'
     ? `https://assets.conveyal.com${fontPath}`
     : fontPath
+
+export const MAX_CUTOFF_MINUTES = 240
+export const CUTOFF_TICKS = [
+  0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240
+]

@@ -2,6 +2,7 @@ import {format} from 'd3-format'
 import {scaleSqrt, scaleLinear, ScalePower} from 'd3-scale'
 import {line, area} from 'd3-shape'
 import {CSSProperties, memo} from 'react'
+import {MAX_CUTOFF_MINUTES, CUTOFF_TICKS} from 'lib/constants'
 
 import colors from 'lib/constants/colors'
 
@@ -21,8 +22,8 @@ const CHART_WIDTH = SVG_WIDTH - BARS_WIDTH_PX
 const TEXT_HEIGHT = 10
 const TEXT_BUFFER = 10
 const CHART_HEIGHT = SVG_HEIGHT - (TEXT_HEIGHT + TEXT_BUFFER)
-const MAX_TRIP_DURATION = 120
-const TIME_LABELS = [0, 15, 30, 45, 60, 75, 90, 105, 120]
+const MAX_TRIP_DURATION = MAX_CUTOFF_MINUTES
+const TIME_LABELS = CUTOFF_TICKS
 const MIN_OPACITY = 0.1
 const STROKE_OPACITY = 0.75
 
@@ -198,9 +199,9 @@ const Slices = memo<SlicesProps>(({color, percentileCurves, yScale}) => {
   // a "slice" is the segment between two percentile curves
   const slices: [number, number][][] = []
   for (let slice = 1; slice < percentileCurves.length; slice++) {
-    const combinedValues: [number, number][] = percentileCurves[
-      slice
-    ].map((d, i) => [d, percentileCurves[slice - 1][i]])
+    const combinedValues: [number, number][] = percentileCurves[slice].map(
+      (d, i) => [d, percentileCurves[slice - 1][i]]
+    )
     slices.push(combinedValues)
   }
 

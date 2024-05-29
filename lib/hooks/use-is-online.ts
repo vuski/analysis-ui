@@ -1,22 +1,23 @@
-import {useEffect, useState} from 'react'
+import {useState, useEffect} from 'react'
 
 export default function useIsOnline() {
   const [isOnline, setOnline] = useState(
-    process.browser && window.navigator.onLine
+    typeof window !== 'undefined' && window.navigator.onLine
   )
 
   useEffect(() => {
-    const onOnline = () => setOnline(true)
-    const onOffline = () => setOnline(false)
+    function setFromEvent(event: Event) {
+      setOnline(navigator.onLine)
+    }
 
-    window.addEventListener('online', onOnline)
-    window.addEventListener('offline', onOffline)
+    window.addEventListener('online', setFromEvent)
+    window.addEventListener('offline', setFromEvent)
 
     return () => {
-      window.removeEventListener('online', onOnline)
-      window.removeEventListener('offline', onOffline)
+      window.removeEventListener('online', setFromEvent)
+      window.removeEventListener('offline', setFromEvent)
     }
-  }, [setOnline])
+  }, [])
 
   return isOnline
 }

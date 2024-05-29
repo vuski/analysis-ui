@@ -3,8 +3,9 @@ import times from 'lodash/times'
 import {createSelector} from 'reselect'
 
 import {activeOpportunityDatasetGrid} from 'lib/modules/opportunity-datasets/selectors'
+import {MAX_CUTOFF_MINUTES, CUTOFF_TICKS} from 'lib/constants'
 
-const MAX_TRIP_DURATION = 120
+const MAX_TRIP_DURATION = MAX_CUTOFF_MINUTES
 const TOTAL_CUTOFFS = MAX_TRIP_DURATION + 1
 
 /**
